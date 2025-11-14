@@ -1,4 +1,4 @@
-﻿using Blogger.Models;
+﻿using Blogger.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +10,7 @@ namespace Blogger.Controllers
     public class BloggerController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<Blogger.Models.Blogger> GetAllBlogger()
+        public ActionResult<Models.Blogger> GetAllBlogger()
         {
             using (BloggerDbContext context = new BloggerDbContext())
             {
@@ -27,7 +27,7 @@ namespace Blogger.Controllers
         }
 
         [HttpGet("GetById")]
-        public ActionResult<Blogger.Models.Blogger> GetBloggerById(int id)
+        public ActionResult<Models.Blogger> GetBloggerById(int id)
         {
             using (BloggerDbContext context = new BloggerDbContext())
             {
@@ -44,14 +44,14 @@ namespace Blogger.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Blogger.Models.Blogger> InsertBlogger([FromBody] BloggerDto bloggerDto)
+        public ActionResult<Models.Blogger> InsertBlogger([FromBody] BloggerDto bloggerDto)
         {
 
             using (BloggerDbContext context = new BloggerDbContext())
             {
                 if (bloggerDto != null)
                 {
-                    Blogger.Models.Blogger newBlogger = new Blogger.Models.Blogger()
+                    Models.Blogger newBlogger = new Models.Blogger()
                     {
                         Name = bloggerDto.Name,
                         Email = bloggerDto.Email,
@@ -74,7 +74,7 @@ namespace Blogger.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Blogger.Models.Blogger> ModifyBloggerData(int id, BloggerDto bloggerDto)
+        public ActionResult<Models.Blogger> ModifyBloggerData(int id, BloggerDto bloggerDto)
         {
             using (BloggerDbContext context = new BloggerDbContext())
             {
@@ -95,9 +95,27 @@ namespace Blogger.Controllers
                 }
             }
 
-
             return BadRequest(new {message = "Sikertelen módosítás"});
         }
 
+
+        [HttpDelete]
+        public ActionResult<Models.Blogger> DeleteBlogger(int id)
+        {
+            using(BloggerDbContext context = new BloggerDbContext())
+            {
+                var foundBlogger = context.Blog.FirstOrDefault(b => b.Id == id);
+
+                if (foundBlogger != null)
+                {
+                    context.Remove(foundBlogger);
+                    context.SaveChanges();
+                    return StatusCode(204);
+                }
+
+                return NotFound(new { message = "Nincs ilyen id" });
+            }
+
+        }
     }
 }
