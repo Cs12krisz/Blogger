@@ -36,7 +36,7 @@ namespace Blogger.Controllers
 
                 if (bloggers >= 0)
                 {
-                    return Ok(new { value = $"Bloggerek száma: {bloggers}" });
+                    return Ok(new { message = $"Bloggerek száma: {bloggers}" });
                 }
 
                 return BadRequest(new { message = "Sikertelen lekérés" });
