@@ -1,6 +1,7 @@
 ﻿using Blogger.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Blogger.Controllers;
 
 
 namespace Blogger.Controllers
@@ -26,6 +27,56 @@ namespace Blogger.Controllers
 
         }
 
+        [HttpGet("BloggersNumber")]
+        public ActionResult<Models.Blogger> GetBloggerCount()
+        {
+            using (BloggerDbContext context = new BloggerDbContext())
+            {
+                var bloggers = context.Blog.ToArray().Length;
+
+                if (bloggers >= 0)
+                {
+                    return Ok(new { value = $"Bloggerek száma: {bloggers}" });
+                }
+
+                return BadRequest(new { message = "Sikertelen lekérés" });
+            }
+
+        }
+
+        [HttpGet("BloggersNameAndEmail")]
+        public ActionResult<Models.Blogger> GetBloggerNameAndEmail()
+        {
+            using (BloggerDbContext context = new BloggerDbContext())
+            {
+                var bloggers = context.Blog.Select(b => new {b.Name, b.Email}).ToArray();
+
+                if (bloggers != null)
+                {
+                    return Ok(bloggers);
+                }
+
+                return BadRequest(new {message = "Sikertelen lekérés"});
+            }
+        }
+
+        [HttpGet("OldestBlogger")]
+        public ActionResult<Models.Blogger> GetOldestBlogger()
+        {
+            using (BloggerDbContext context = new BloggerDbContext())
+            {
+                var oldest = context.Blog.OrderBy(b => b.RegTime).FirstOrDefault();
+
+                if (oldest != null)
+                {
+                    return Ok(new { message = "A legrégebbi blogger", value = oldest });
+                }
+
+               return BadRequest(new { message = "Sikertelen lekérdezés" });
+            }
+
+        }
+
         [HttpGet("GetById")]
         public ActionResult<Models.Blogger> GetBloggerById(int id)
         {
@@ -44,7 +95,7 @@ namespace Blogger.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Models.Blogger> InsertBlogger([FromBody] BloggerDto bloggerDto)
+        public ActionResult<Models.Blogger> InsertBlogger([FromBody] Dtos.BloggerDto bloggerDto)
         {
 
             using (BloggerDbContext context = new BloggerDbContext())
@@ -74,7 +125,7 @@ namespace Blogger.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Models.Blogger> ModifyBloggerData(int id, BloggerDto bloggerDto)
+        public ActionResult<Models.Blogger> ModifyBloggerData(int id, Dtos.BloggerDto bloggerDto)
         {
             using (BloggerDbContext context = new BloggerDbContext())
             {

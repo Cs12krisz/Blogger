@@ -29,7 +29,7 @@
     "Parameters": [
       {
         "Name": "bloggerDto",
-        "Type": "Blogger.Controllers.BloggerDto",
+        "Type": "Blogger.Controllers.Dtos.BloggerDto",
         "IsRequired": true
       }
     ],
@@ -60,7 +60,7 @@
       },
       {
         "Name": "bloggerDto",
-        "Type": "Blogger.Controllers.BloggerDto",
+        "Type": "Blogger.Controllers.Dtos.BloggerDto",
         "IsRequired": true
       }
     ],
@@ -104,6 +104,46 @@
   },
   {
     "ContainingType": "Blogger.Controllers.BloggerController",
+    "Method": "GetBloggerNameAndEmail",
+    "RelativePath": "api/Blogger/BloggersNameAndEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Blogger.Models.Blogger",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Blogger.Controllers.BloggerController",
+    "Method": "GetBloggerCount",
+    "RelativePath": "api/Blogger/BloggersNumber",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Blogger.Models.Blogger",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Blogger.Controllers.BloggerController",
     "Method": "GetBloggerById",
     "RelativePath": "api/Blogger/GetById",
     "HttpMethod": "GET",
@@ -116,6 +156,26 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": [
+      {
+        "Type": "Blogger.Models.Blogger",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Blogger.Controllers.BloggerController",
+    "Method": "GetOldestBlogger",
+    "RelativePath": "api/Blogger/OldestBlogger",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "Blogger.Models.Blogger",

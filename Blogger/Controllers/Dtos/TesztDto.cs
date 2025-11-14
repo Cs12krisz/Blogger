@@ -1,8 +1,7 @@
 ﻿namespace Blogger.Controllers.Dtos
 {
-    public class BloggerDto
+    public class TesztDto
     {
         public string Name { get; set; }
-        public string Email { get; set; }
     }
 }
